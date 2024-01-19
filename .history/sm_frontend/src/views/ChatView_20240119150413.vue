@@ -86,6 +86,7 @@
 
 			<div class="bg-white border border-gray-200 rounded-lg">
 				<form v-on:submit.prevent="submitForm">
+					<!-- on prevent? -->
 					<div class="p-4">
 						<textarea
 							v-model="body"
@@ -198,7 +199,6 @@
 						console.log(response.data);
 
 						this.activeConversation.messages.push(response.data);
-						this.body = "";
 					})
 					.catch((error) => {
 						console.log("Error sending message: ", error);

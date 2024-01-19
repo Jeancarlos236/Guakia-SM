@@ -85,7 +85,8 @@
 			</div>
 
 			<div class="bg-white border border-gray-200 rounded-lg">
-				<form v-on:submit.prevent="submitForm">
+				<form v-on:submit="submitForm">
+					<!-- on prevent? -->
 					<div class="p-4">
 						<textarea
 							v-model="body"
@@ -127,6 +128,9 @@
 
 		setup() {
 			const userStore = useUserStore();
+
+			// Set up the WebSocket connection when the component is created
+
 			return {
 				userStore,
 			};
@@ -148,6 +152,7 @@
 				console.log("setActiveConversation", id);
 
 				this.activeConversation = id;
+				this.initializeWebSocket(id);
 
 				this.getMessages();
 			},
@@ -198,7 +203,6 @@
 						console.log(response.data);
 
 						this.activeConversation.messages.push(response.data);
-						this.body = "";
 					})
 					.catch((error) => {
 						console.log("Error sending message: ", error);

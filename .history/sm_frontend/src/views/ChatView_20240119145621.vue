@@ -85,7 +85,8 @@
 			</div>
 
 			<div class="bg-white border border-gray-200 rounded-lg">
-				<form v-on:submit.prevent="submitForm">
+				<form v-on:submit="submitForm">
+					<!-- on prevent? -->
 					<div class="p-4">
 						<textarea
 							v-model="body"
@@ -121,16 +122,59 @@
 <script>
 	import axios from "axios";
 	import { useUserStore } from "@/stores/user";
+	import VueNativeSock from "vue-native-websocket";
+	import { useSocketStoreWithOut } from '../stores/socket';
+		// 	 Use the WebSocket plugin
+		// app.use(VueNativeSock, webSocketUrl, {
+		//   store: useSocketStoreWithOut(), // Install the socket store here
+		// });
 
 	export default {
 		name: "chat",
 
-		setup() {
-			const userStore = useUserStore();
-			return {
-				userStore,
-			};
-		},
+	setup() {
+    const userStore = useUserStore();
+
+    // Set up the WebSocket connection when the component is created
+    const initializeWebSocket = (conversationId) => {
+      const webSocketUrl = `ws://127.0.0.1:8000/ws/chat/${conversationId}/`;
+      const store = useSocketStoreWithOut();
+
+      VueNativeSock.install(Vue, webSocketUrl, {
+        store: store,
+        format: "json",
+        reconnection: true,
+        reconnectionAttempts: 5,
+        reconnectionDelay: 3000,
+      });
+
+      // Add WebSocket event listeners
+      VueNativeSock.addVueNativeSockListener({
+        // Handle incoming WebSocket messages
+        message: (event) => {
+          const message = JSON.parse(event.data);
+          // Handle the received message (update UI, etc.)
+          console.log("Received message:", message);
+        },
+
+        // Handle WebSocket connection opened
+        connect: () => {
+          console.log("WebSocket connected");
+        },
+
+        // Handle WebSocket connection closed
+        disconnect: () => {
+          console.log("WebSocket disconnected");
+        },
+      });
+    };
+
+    return {
+      userStore,
+      initializeWebSocket,
+      
+    };
+  },
 		data() {
 			return {
 				conversations: [],
@@ -141,6 +185,7 @@
 
 		mounted() {
 			this.getConversations();
+			
 		},
 
 		methods: {
@@ -148,8 +193,9 @@
 				console.log("setActiveConversation", id);
 
 				this.activeConversation = id;
+				this.initializeWebSocket(id);
 
-				this.getMessages();
+     			this.getMessages();
 			},
 			getConversations() {
 				console.log("getConversations");
@@ -198,7 +244,6 @@
 						console.log(response.data);
 
 						this.activeConversation.messages.push(response.data);
-						this.body = "";
 					})
 					.catch((error) => {
 						console.log("Error sending message: ", error);
