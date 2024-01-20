@@ -9,7 +9,7 @@
 						class="flex items-center justify-between"
 						v-for="conversation in conversations"
 						v-bind:key="conversation.id"
-						v-on:click="setActiveConversation(conversation)">
+						v-on:click="setActiveConversation(conversation.id)">
 						<div class="flex items-center space-x-2">
 							<template
 								v-for="user in conversation.users"
@@ -146,8 +146,9 @@
 
 		methods: {
 			setActiveConversation(conversation) {
+				console.log("setActiveConversation", id);
 				this.socket = new WebSocket(
-					`ws://localhost:8000/ws/chat/${conversation.id}/`,
+					`ws://localhost:8000/ws/chat/{conversation}/`,
 				);
 				this.activeConversation = conversation;
 				this.getMessages();
@@ -163,7 +164,9 @@
 						this.conversations = response.data;
 
 						if (this.conversations.length) {
-							this.setActiveConversation(this.conversations[0]);
+							this.setActiveConversation(
+								this.conversations[0].id,
+							);
 						}
 
 						this.getMessages();
@@ -177,7 +180,7 @@
 				console.log("getMessages");
 
 				axios
-					.get(`/api/chat/${this.activeConversation.id}/`)
+					.get(`/api/chat/${this.activeConversation}/`)
 					.then((response) => {
 						console.log(response.data);
 
@@ -192,16 +195,11 @@
 				console.log("submitForm", this.body);
 
 				if (this.body.trim() !== "") {
-					console.log("User", this.user);
 					this.socket.send(
 						JSON.stringify({
 							type: "chat-message",
 							message: this.body,
-							// created_by: this.userStore.user.id,
-							// sent_to: (this.userStore.user.id = this
-							// 	.activeConversation.users[0]
-							// 	? this.activeConversation.users[1]
-							// 	: this.activeConversation.users[0]),
+							user1: this.conversation.users[0],
 						}),
 					);
 					console.log("mmg");

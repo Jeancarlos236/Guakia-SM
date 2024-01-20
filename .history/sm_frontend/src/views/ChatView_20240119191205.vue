@@ -192,16 +192,11 @@
 				console.log("submitForm", this.body);
 
 				if (this.body.trim() !== "") {
-					console.log("User", this.user);
 					this.socket.send(
 						JSON.stringify({
 							type: "chat-message",
 							message: this.body,
-							// created_by: this.userStore.user.id,
-							// sent_to: (this.userStore.user.id = this
-							// 	.activeConversation.users[0]
-							// 	? this.activeConversation.users[1]
-							// 	: this.activeConversation.users[0]),
+							// /user1: this.conversation.users[0],
 						}),
 					);
 					console.log("mmg");

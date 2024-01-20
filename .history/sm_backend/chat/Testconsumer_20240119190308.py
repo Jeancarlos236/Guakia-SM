@@ -20,6 +20,7 @@ class ChatConsumer(WebsocketConsumer):
             type = text_data_json.get("type", text_data_json)
             
             if(type == 'chat-message'):
+                print("entro")
                 message = text_data_json.get("message", text_data_json)
                 self.send(text_data=json.dumps({"message": message}))
         except json.JSONDecodeError:

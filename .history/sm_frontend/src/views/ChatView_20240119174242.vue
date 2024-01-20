@@ -9,7 +9,7 @@
 						class="flex items-center justify-between"
 						v-for="conversation in conversations"
 						v-bind:key="conversation.id"
-						v-on:click="setActiveConversation(conversation)">
+						v-on:click="setActiveConversation(conversation.id)">
 						<div class="flex items-center space-x-2">
 							<template
 								v-for="user in conversation.users"
@@ -141,15 +141,17 @@
 		},
 
 		mounted() {
+			this.socket = new WebSocket(
+				`ws://localhost:8000/ws/chat/{conversationID}`,
+			);
 			this.getConversations();
 		},
 
 		methods: {
-			setActiveConversation(conversation) {
-				this.socket = new WebSocket(
-					`ws://localhost:8000/ws/chat/${conversation.id}/`,
-				);
-				this.activeConversation = conversation;
+			setActiveConversation(id) {
+				console.log("setActiveConversation", id);
+
+				this.activeConversation = id;
 				this.getMessages();
 			},
 			getConversations() {
@@ -163,7 +165,7 @@
 						this.conversations = response.data;
 
 						if (this.conversations.length) {
-							this.setActiveConversation(this.conversations[0]);
+							this.activeConversation = this.conversations[0].id;
 						}
 
 						this.getMessages();
@@ -177,7 +179,7 @@
 				console.log("getMessages");
 
 				axios
-					.get(`/api/chat/${this.activeConversation.id}/`)
+					.get(`/api/chat/${this.activeConversation}/`)
 					.then((response) => {
 						console.log(response.data);
 
@@ -191,21 +193,21 @@
 			submitForm() {
 				console.log("submitForm", this.body);
 
-				if (this.body.trim() !== "") {
-					console.log("User", this.user);
-					this.socket.send(
-						JSON.stringify({
-							type: "chat-message",
-							message: this.body,
-							// created_by: this.userStore.user.id,
-							// sent_to: (this.userStore.user.id = this
-							// 	.activeConversation.users[0]
-							// 	? this.activeConversation.users[1]
-							// 	: this.activeConversation.users[0]),
-						}),
-					);
-					console.log("mmg");
-					this.body = "";
+				axios
+					.post(`/api/chat/${this.activeConversation.id}/send/`, {
+						body: this.body,
+					})
+					.then((response) => {
+						console.log(response.data);
+
+						this.activeConversation.messages.push(response.data);
+						this.body = "";
+					})
+					.catch((error) => {
+						console.log("Error sending message: ", error);
+					});
+				if (this.body.trim() == !"") {
+					this.socket.send();
 				}
 			},
 		},
