@@ -149,8 +149,18 @@
 		},
 
 		methods: {
-			deletePost(id) {
-				this.posts = this.posts.filter((post) => post.id !== id);
+			async deletePost(id) {
+				try {
+					// Make API request to delete the post
+					await axios.delete(`/api/posts/${id}/delete/`);
+
+					// Remove the deleted post from the local posts list
+					this.posts = this.posts.filter((post) => post.id !== id);
+					console.log("post has been deleted");
+					this.getFeed();
+				} catch (error) {
+					console.log("Error deleting post", error);
+				}
 			},
 			sendDirectMessage() {
 				console.log("sendDirectMessage");

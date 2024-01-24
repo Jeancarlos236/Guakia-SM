@@ -103,8 +103,15 @@
 </template>
 <script>
 	import axios from "axios";
-
+	import { useToastStore } from "@/stores/toast";
 	export default {
+		setup() {
+			const toastStore = useToastStore();
+
+			return {
+				toastStore,
+			};
+		},
 		props: {
 			user: Object,
 			posts: Array,
@@ -133,34 +140,41 @@
 			},
 			submitForm() {
 				console.log("submitForm", this.body);
-
 				let formData = new FormData();
 				formData.append("image", this.$refs.file.files[0]);
 				formData.append("body", this.body);
 				formData.append("is_private", this.is_private);
 
-				axios
-					.post("/api/posts/create/", formData, {
-						headers: {
-							"Content-Type": "multipart/form-data",
-						},
-					})
-					.then((response) => {
-						console.log("data", response.data);
+				if (this.body.trim() !== "") {
+					axios
+						.post("/api/posts/create/", formData, {
+							headers: {
+								"Content-Type": "multipart/form-data",
+							},
+						})
+						.then((response) => {
+							console.log("data", response.data);
 
-						this.posts.unshift(response.data);
-						this.body = "";
-						this.is_private = false;
-						this.$refs.file.value = null;
-						this.url = null;
+							this.posts.unshift(response.data);
+							this.body = "";
+							this.is_private = false;
+							this.$refs.file.value = null;
+							this.url = null;
 
-						if (this.user) {
-							this.user.posts_count += 1;
-						}
-					})
-					.catch((error) => {
-						console.log("error", error);
-					});
+							if (this.user) {
+								this.user.posts_count += 1;
+							}
+						})
+						.catch((error) => {
+							console.log("error", error);
+						});
+				} else {
+					this.toastStore.showToast(
+						5000,
+						"Add text to your post!",
+						"bg-red-300",
+					);
+				}
 			},
 		},
 	};

@@ -47,10 +47,17 @@
 	import Trends from "../components/Trends.vue";
 	import FeedItem from "../components/FeedItem.vue";
 	import CommentItem from "../components/CommentItem.vue";
+	import { useToastStore } from "@/stores/toast";
 
 	export default {
 		name: "PostView",
+		setup() {
+			const toastStore = useToastStore();
 
+			return {
+				toastStore,
+			};
+		},
 		components: {
 			PeopleYouMayKnow,
 			Trends,
@@ -87,22 +94,28 @@
 			},
 
 			submitForm() {
-				console.log("submitForm", this.body);
+				if (this.body.trim() !== "") {
+					axios
+						.post(`/api/posts/${this.$route.params.id}/comment/`, {
+							body: this.body,
+						})
+						.then((response) => {
+							console.log("data", response.data);
 
-				axios
-					.post(`/api/posts/${this.$route.params.id}/comment/`, {
-						body: this.body,
-					})
-					.then((response) => {
-						console.log("data", response.data);
-
-						this.post.comments.push(response.data);
-						this.post.comments_count += 1;
-						this.body = "";
-					})
-					.catch((error) => {
-						console.log("error", error);
-					});
+							this.post.comments.push(response.data);
+							this.post.comments_count += 1;
+							this.body = "";
+						})
+						.catch((error) => {
+							console.log("error", error);
+						});
+				} else {
+					this.toastStore.showToast(
+						5000,
+						"Add text to your post!",
+						"bg-red-300",
+					);
+				}
 			},
 		},
 	};

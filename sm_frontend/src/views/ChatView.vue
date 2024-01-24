@@ -146,10 +146,16 @@
 
 		methods: {
 			setActiveConversation(conversation) {
+				this.activeConversation = conversation;
 				this.socket = new WebSocket(
 					`ws://localhost:8000/ws/chat/${conversation.id}/`,
 				);
-				this.activeConversation = conversation;
+				this.socket.onmessage = (event) => {
+					const message = JSON.parse(event.data);
+					if (message.type === "chat-message") {
+						this.activeConversation.messages.push(message.info);
+					}
+				};
 				this.getMessages();
 			},
 			getConversations() {
@@ -192,18 +198,20 @@
 				console.log("submitForm", this.body);
 
 				if (this.body.trim() !== "") {
-					console.log("User", this.user);
 					this.socket.send(
 						JSON.stringify({
 							type: "chat-message",
+							conversation_id: this.activeConversation.id,
 							message: this.body,
-							// created_by: this.userStore.user.id,
-							// sent_to: (this.userStore.user.id = this
-							// 	.activeConversation.users[0]
-							// 	? this.activeConversation.users[1]
-							// 	: this.activeConversation.users[0]),
+							created_by: this.userStore.user.id,
+							sent_to:
+								this.userStore.user.id ==
+								this.activeConversation.users[0]
+									? this.activeConversation.users[1]
+									: this.activeConversation.users[0],
 						}),
 					);
+
 					console.log("mmg");
 					this.body = "";
 				}
