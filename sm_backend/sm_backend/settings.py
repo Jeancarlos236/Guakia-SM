@@ -49,11 +49,11 @@ REST_FRAMEWORK={
 }
 
 CORS_ALLOWED_ORIGINS=[
-    "http://localhost:5173"
+    "https://guakia-social-media-fe.onrender.com"
 ]
 
 CORS_TRUSTED_ORIGINS=[
-    "http://localhost:5173"
+    "https://guakia-social-media-fe.onrender.com"
 ]
 
 INSTALLED_APPS = [

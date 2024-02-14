@@ -3,12 +3,12 @@ import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
 import axios from "axios";
-import './assets/main.css'
+import "./assets/main.css";
 const app = createApp(App);
 // Set up the global axios configuration
-axios.defaults.baseURL = "http://127.0.0.1:8000";
+axios.defaults.baseURL = "https://jean-social-media.onrender.com";
 
-// Use Pinia for state management  
+// Use Pinia for state management
 app.use(createPinia());
 
 // Use the router and axios
