@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-$pfs6e%9&h&x+r^s^*%!lwyt^)-8#txdmol6z+y49j^swe^m5c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['jean-social-media.onrender.com']
 
 WEBSITE_URL='https://jean-social-media.onrender.com'
 
@@ -54,6 +54,7 @@ CORS_ALLOWED_ORIGINS=[
 
 CORS_TRUSTED_ORIGINS=[
     "https://guakia-social-media-fe.onrender.com"
+        'https://jean-social-media.onrender.com'
 ]
 
 INSTALLED_APPS = [
