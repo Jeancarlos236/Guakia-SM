@@ -54,12 +54,14 @@ REST_FRAMEWORK={
 }
 
 CORS_ALLOWED_ORIGINS=[
-    "https://guakia-social-media-fe.onrender.com"
+    "https://guakia-social-media-fe.onrender.com",
+    "http://127.0.0.1:5173"
 ]
 
 CORS_TRUSTED_ORIGINS=[
-    "https://guakia-social-media-fe.onrender.com"
-        'https://jean-social-media.onrender.com'
+    "https://guakia-social-media-fe.onrender.com",
+        'https://jean-social-media.onrender.com',
+        "http://127.0.0.1"
 ]
 
 INSTALLED_APPS = [
