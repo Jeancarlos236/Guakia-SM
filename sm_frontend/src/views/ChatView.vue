@@ -148,7 +148,7 @@
 			setActiveConversation(conversation) {
 				this.activeConversation = conversation;
 				this.socket = new WebSocket(
-					`ws://localhost:8000/ws/chat/${conversation.id}/`,
+					`wss://jean-social-media.onrender.com/ws/chat/${conversation.id}/`,
 				);
 				this.socket.onmessage = (event) => {
 					const message = JSON.parse(event.data);
