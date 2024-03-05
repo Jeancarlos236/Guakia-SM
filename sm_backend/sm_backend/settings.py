@@ -21,7 +21,8 @@ DEBUG = "RENDER" not in os.environ
 
 ALLOWED_HOSTS = ['jean-social-media.onrender.com','127.0.0.1']
 
-WEBSITE_URL='https://jean-social-media.onrender.com'
+# WEBSITE_URL='https://jean-social-media.onrender.com'
+WEBSITE_URL='https://127.0.0.1:8000'
 
 # Application definition
 
@@ -54,14 +55,14 @@ REST_FRAMEWORK={
 }
 
 CORS_ALLOWED_ORIGINS=[
+    "http://localhost:5173",
     "https://guakia-social-media-fe.onrender.com",
-    "http://127.0.0.1:5173"
 ]
 
 CORS_TRUSTED_ORIGINS=[
+    "http://localhost:5173",
     "https://guakia-social-media-fe.onrender.com",
-        'https://jean-social-media.onrender.com',
-        "http://127.0.0.1"
+    'https://jean-social-media.onrender.com',
 ]
 
 INSTALLED_APPS = [
