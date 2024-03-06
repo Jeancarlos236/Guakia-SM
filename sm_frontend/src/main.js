@@ -7,7 +7,7 @@ import "./assets/main.css";
 const app = createApp(App);
 // Set up the global axios configuration
 // axios.defaults.baseURL = "https://jean-social-media.onrender.com";
-axios.defaults.baseURL = "http://127.0.0.1:8000";
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
 // Use Pinia for state management
 app.use(createPinia());
