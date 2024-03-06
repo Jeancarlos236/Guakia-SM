@@ -1,9 +1,12 @@
 import os
+import environ
 from datetime import timedelta
 from pathlib import Path
 
 # Import dj-database-url at the beginning of the file.
 import dj_database_url
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -13,26 +16,26 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', default='django-insecure-$pfs6e%9&h&x+r^s^*%!lwyt^)-8#txdmol6z+y49j^swe^m5c')
+SECRET_KEY = env("SECRET_KEY")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = "RENDER" not in os.environ
-#'jean-social-media.onrender.com'
+
 ALLOWED_HOSTS = []
 
-# WEBSITE_URL='https://jean-social-media.onrender.com'
-WEBSITE_URL='http://127.0.0.1:8000'
+
+WEBSITE_URL=env("WEBSITE_URL")
 
 # Application definition
 
 # EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'PackageManagerITLA@gmail.com'
-EMAIL_HOST_PASSWORD = 'ltpkiikasypejsxi'
+EMAIL_BACKEND = env("EMAIL_BACKEND")
+EMAIL_HOST = env("EMAIL_HOST")
+EMAIL_USE_TLS = env("EMAIL_USE_TLS")
+EMAIL_PORT = env("EMAIL_PORT")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 
 
 
@@ -54,16 +57,9 @@ REST_FRAMEWORK={
     )
 }
 
-CORS_ALLOWED_ORIGINS=[
-    "http://localhost:5173",
-    # "https://guakia-social-media-fe.onrender.com",
-]
+CORS_ALLOWED_ORIGINS=env.list('CORS_ALLOWED_ORIGINS')
 
-CSRF_TRUSTED_ORIGINS=[
-    "http://localhost:5173",
-#     "https://guakia-social-media-fe.onrender.com",
-#     'https://jean-social-media.onrender.com',
-]
+CSRF_TRUSTED_ORIGINS=env.list('CSRF_TRUSTED_ORIGINS')
 
 INSTALLED_APPS = [
     'daphne',
@@ -125,7 +121,7 @@ CHANNEL_LAYERS = {
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://postgres:jeffmmg@host.docker.internal:5432/guakia',conn_max_age=600)
+    'default': dj_database_url.config(default=env("DB_URL"),conn_max_age=600)
 }
 
 
