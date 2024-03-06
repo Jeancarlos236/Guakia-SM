@@ -18,11 +18,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default='django-insecure-$pfs6e%9&h&x+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = "RENDER" not in os.environ
-
-ALLOWED_HOSTS = ['jean-social-media.onrender.com','127.0.0.1']
+#'jean-social-media.onrender.com'
+ALLOWED_HOSTS = []
 
 # WEBSITE_URL='https://jean-social-media.onrender.com'
-WEBSITE_URL='https://127.0.0.1:8000'
+WEBSITE_URL='http://127.0.0.1:8000'
 
 # Application definition
 
@@ -56,13 +56,13 @@ REST_FRAMEWORK={
 
 CORS_ALLOWED_ORIGINS=[
     "http://localhost:5173",
-    "https://guakia-social-media-fe.onrender.com",
+    # "https://guakia-social-media-fe.onrender.com",
 ]
 
-CORS_TRUSTED_ORIGINS=[
+CSRF_TRUSTED_ORIGINS=[
     "http://localhost:5173",
-    "https://guakia-social-media-fe.onrender.com",
-    'https://jean-social-media.onrender.com',
+#     "https://guakia-social-media-fe.onrender.com",
+#     'https://jean-social-media.onrender.com',
 ]
 
 INSTALLED_APPS = [
@@ -125,8 +125,8 @@ CHANNEL_LAYERS = {
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://admin:bIG4erHX6622GGZzHkJ4S3eRXu3zNjwt@dpg-cnb942ed3nmc73cucc40-a.oregon-postgres.render.com/guakia',conn_max_age=600)
-    }
+    'default': dj_database_url.config(default='postgres://postgres:jeffmmg@host.docker.internal:5432/guakia',conn_max_age=600)
+}
 
 
 # Password validation
