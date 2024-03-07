@@ -15,7 +15,7 @@
 								v-for="user in conversation.users"
 								v-bind:key="user.id">
 								<img
-									:src="user.get_avatar"
+									:src="user.avatar"
 									class="w-[50px] h-[50px] rounded-full object-cover" />
 								<p
 									class="text-xs font-bold"
@@ -56,7 +56,7 @@
 							</div>
 							<div class="flex-shrink-0 h-10 w-10 rounded-full">
 								<img
-									:src="message.created_by.get_avatar"
+									:src="message.created_by.avatar"
 									class="w-[50px] h-[50px] rounded-full object-cover" />
 							</div>
 						</div>
@@ -64,7 +64,7 @@
 						<div class="flex w-full mt-2 space-x-3 max-w-md" v-else>
 							<div class="flex-shrink-0 h-10 w-10 rounded-full">
 								<img
-									:src="message.created_by.get_avatar"
+									:src="message.created_by.avatar"
 									class="w-[50px] h-[50px] rounded-full object-cover" />
 							</div>
 							<div>

@@ -2,7 +2,7 @@
 	<div class="mb-6 flex items-center justify-between">
 		<div class="flex items-center space-x-6">
 			<img
-				:src="post.created_by.get_avatar"
+				:src="post.created_by.avatar"
 				class="w-[50px] h-[50px] rounded-full object-cover" />
 
 			<p>

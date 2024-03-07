@@ -136,7 +136,7 @@
 				if (file) {
 					this.url = URL.createObjectURL(file);
 				} else {
-					this.url = this.useUserStore.user.get_avatar;
+					this.url = this.useUserStore.user.avatar;
 				}
 			},
 			submitForm() {
@@ -176,7 +176,7 @@
 									id: this.userStore.user.id,
 									name: this.form.name,
 									email: this.form.email,
-									avatar: response.data.user.get_avatar,
+									avatar: response.data.user.avatar,
 								});
 
 								this.$router.back();

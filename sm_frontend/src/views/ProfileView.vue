@@ -5,7 +5,7 @@
 				class="p-4 bg-white border border-gray-200 text-center rounded-lg">
 				<div class="flex flex-col items-center">
 					<img
-						:src="user.get_avatar"
+						:src="user.avatar"
 						class="w-64 h-64 rounded-full object-cover" />
 				</div>
 

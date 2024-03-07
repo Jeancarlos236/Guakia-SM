@@ -11,7 +11,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication  # force
 from .forms import ProfileForm, SignupForm
 from .models import FriendshipRequest, User
 from .serializer import FriendshipRequestSerializer, UserSerializer
-
+from sm_backend.cloudinary import uploadImage
 
 @api_view(['GET'])
 @authentication_classes([JWTAuthentication]) #force
@@ -20,7 +20,7 @@ def me(request):
         'id': request.user.id,
         'name': request.user.name,
         'email': request.user.email,
-        'avatar':request.user.get_avatar()
+        'avatar':request.user.avatar
         })
 
 @api_view(['POST'])
@@ -104,13 +104,14 @@ def editprofile(request):
         return JsonResponse({'message': 'Email already exists'})
 
     else:
-        form=ProfileForm(request.data, request.FILES, request.POST, instance=user)
-        
+
+        avatar=uploadImage(request.FILES['avatar'])
+        userData={'name':request.data['name'],"email":request.data['email'],"avatar":avatar}
+        form=ProfileForm(userData, request.POST, instance=user)
         if form.is_valid(): 
             form.save()
         
         serializer=UserSerializer(user)
-        
         return JsonResponse({'message': 'information updated','user':serializer.data})
 
 @api_view(['POST'])

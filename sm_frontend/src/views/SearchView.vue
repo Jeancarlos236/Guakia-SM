@@ -37,7 +37,7 @@
 					v-for="user in users"
 					v-bind:key="user.id">
 					<img
-						:src="user.get_avatar"
+						:src="user.avatar"
 						class="mb-6 w-[50px] h-[50px] object-cover rounded-full" />
 
 					<p>

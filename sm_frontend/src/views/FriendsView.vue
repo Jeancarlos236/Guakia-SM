@@ -5,7 +5,7 @@
 				class="p-4 bg-white border border-gray-200 text-center rounded-lg">
 				<div class="flex flex-col items-center">
 					<img
-						:src="user.get_avatar"
+						:src="user.avatar"
 						class="w-64 h-64 rounded-full object-cover" />
 				</div>
 				<p>
@@ -35,7 +35,7 @@
 					v-bind:key="friendshipRequest.id">
 					<div class="flex flex-col items-center">
 						<img
-							:src="friendshipRequest.created_by.get_avatar"
+							:src="friendshipRequest.created_by.avatar"
 							class="mb-6 h-52 w-52 rounded-full object-cover" />
 					</div>
 
@@ -99,7 +99,7 @@
 					v-for="user in friends"
 					v-bind:key="user.id">
 					<img
-						:src="user.get_avatar"
+						:src="user.avatar"
 						class="mb-6 rounded-full w-52 h-52 object-cover" />
 
 					<p>

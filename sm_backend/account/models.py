@@ -34,7 +34,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=255, blank=True, default='')
-    avatar = models.ImageField(upload_to='avatars', blank=True, null=True)
+    avatar = models.CharField(max_length=255, blank=True, default='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png')
     friends = models.ManyToManyField('self')
     friends_count = models.IntegerField(default=0)
     
@@ -54,13 +54,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = []
-
-    def get_avatar(self):
-        if self.avatar:
-            return settings.WEBSITE_URL + self.avatar.url
-        else:
-            return 'https://picsum.photos/200/'
-
 
 class FriendshipRequest(models.Model):
     SENT = 'sent'
