@@ -90,6 +90,7 @@
 						<textarea
 							v-model="body"
 							class="p-4 w-full bg-gray-100 rounded-lg"
+							@keydown.enter="submitForm"
 							placeholder="What do you want to say?"></textarea>
 					</div>
 

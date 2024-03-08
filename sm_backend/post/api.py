@@ -6,8 +6,10 @@ from notification.utils import create_notification
 from rest_framework.decorators import api_view, authentication_classes
 from rest_framework_simplejwt.authentication import JWTAuthentication  # force
 
-from .forms import AttachmentForm, PostForm
-from .models import Comment, Like, Post, PostAttachment, Trend
+from sm_backend.cloudinary import uploadImage
+
+from .forms import PostForm
+from .models import Comment, Like, Post, Trend
 from .serializers import (CommentSerializer, PostDetailSerializer,
                           PostSerializer, TrendSerializer)
 
@@ -89,22 +91,16 @@ def post_list_profile(request, id):
 @authentication_classes([JWTAuthentication]) #force
 def post_create(request):
     form=PostForm(request.POST)
-    attachment=None
-    attachment_form = AttachmentForm(request.POST, request.FILES)
-    
-    if attachment_form.is_valid():
-        attachment=attachment_form.save(commit=False)
-        attachment.created_by=request.user
-        attachment.save()
-    
+    image_url=uploadImage(request.FILES['image'])
     if form.is_valid():
         post=form.save(commit=False)
         post.created_by=request.user
-        post.save()
         
-        if attachment:
-            post.attachments.add(attachment)
+        
+        if image_url:
+            post.image=image_url
 
+        post.save()
         user=request.user
         user.posts_count+=1
     
