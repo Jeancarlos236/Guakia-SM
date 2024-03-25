@@ -46,12 +46,10 @@
 				axios
 					.get("/api/friends/suggested/")
 					.then((response) => {
-						console.log(response.data);
-
 						this.users = response.data;
 					})
 					.catch((error) => {
-						console.log("error", error);
+						console.error(error);
 					});
 			},
 		},

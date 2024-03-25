@@ -174,27 +174,23 @@
 				axios
 					.get(`/api/friends/${this.$route.params.id}/`)
 					.then((response) => {
-						console.log("data", response.data);
+						console.error(response.data);
 
 						this.friendshipRequests = response.data.requests;
 						this.friends = response.data.friends;
 						this.user = response.data.user;
 					})
 					.catch((error) => {
-						console.log("error", error);
+						console.error(error);
 					});
 			},
 
 			handleRequest(status, pk) {
-				console.log("handleRequest", status);
-
 				axios
 					.post(`/api/friends/${pk}/${status}/`)
-					.then((response) => {
-						console.log("data", response.data);
-					})
+					.then((response) => {})
 					.catch((error) => {
-						console.log("error", error);
+						console.error(error);
 					});
 			},
 		},

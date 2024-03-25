@@ -160,13 +160,9 @@
 				this.getMessages();
 			},
 			getConversations() {
-				console.log("getConversations");
-
 				axios
 					.get("/api/chat/")
 					.then((response) => {
-						console.log(response.data);
-
 						this.conversations = response.data;
 
 						if (this.conversations.length) {
@@ -176,28 +172,22 @@
 						this.getMessages();
 					})
 					.catch((error) => {
-						console.log("Error geting conversations: ", error);
+						console.error(error);
 					});
 			},
 
 			getMessages() {
-				console.log("getMessages");
-
 				axios
 					.get(`/api/chat/${this.activeConversation.id}/`)
 					.then((response) => {
-						console.log(response.data);
-
 						this.activeConversation = response.data;
 					})
 					.catch((error) => {
-						console.log("error getting messages: ", error);
+						console.error(error);
 					});
 			},
 
 			submitForm() {
-				console.log("submitForm", this.body);
-
 				if (this.body.trim() !== "") {
 					this.socket.send(
 						JSON.stringify({
@@ -212,8 +202,6 @@
 									: this.activeConversation.users[0],
 						}),
 					);
-
-					console.log("mmg");
 					this.body = "";
 				}
 			},

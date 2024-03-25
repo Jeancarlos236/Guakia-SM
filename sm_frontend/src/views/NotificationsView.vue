@@ -43,23 +43,17 @@
 				axios
 					.get("/api/notifications/")
 					.then((response) => {
-						console.log(response.data);
-
 						this.notifications = response.data;
 					})
 					.catch((error) => {
-						console.log("Error: ", error);
+						console.error(error);
 					});
 			},
 
 			async readNotification(notification) {
-				console.log("readNotification", notification.id);
-
 				await axios
 					.post(`/api/notifications/read/${notification.id}/`)
 					.then((response) => {
-						console.log(response.data);
-
 						if (
 							notification.type_of_notification == "post_like" ||
 							notification.type_of_notification == "post_comment"
@@ -76,7 +70,7 @@
 						}
 					})
 					.catch((error) => {
-						console.log("Error: ", error);
+						console.error(error);
 					});
 			},
 		},

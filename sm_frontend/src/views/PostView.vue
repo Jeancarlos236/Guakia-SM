@@ -25,7 +25,8 @@
 
 					<div class="p-4 border-t border-gray-100">
 						<button
-							class="inline-block py-4 px-6 bg-purple-600 text-white rounded-lg">
+							class="inline-block py-4 px-6 bg-purple-600 text-white rounded-lg"
+							v-bind:disabled="submitting">
 							Comment
 						</button>
 					</div>
@@ -72,6 +73,7 @@
 					comments: [],
 				},
 				body: "",
+				submitting: false,
 			};
 		},
 
@@ -84,30 +86,30 @@
 				axios
 					.get(`/api/posts/${this.$route.params.id}/`)
 					.then((response) => {
-						console.log("data", response.data);
-
 						this.post = response.data.post;
 					})
 					.catch((error) => {
-						console.log("error", error);
+						console.error(error);
 					});
 			},
 
 			submitForm() {
 				if (this.body.trim() !== "") {
+					this.submitting = True;
 					axios
 						.post(`/api/posts/${this.$route.params.id}/comment/`, {
 							body: this.body,
 						})
 						.then((response) => {
-							console.log("data", response.data);
-
 							this.post.comments.push(response.data);
 							this.post.comments_count += 1;
 							this.body = "";
 						})
 						.catch((error) => {
-							console.log("error", error);
+							console.error(error);
+						})
+						.finally(() => {
+							this.submitting = false;
 						});
 				} else {
 					this.toastStore.showToast(

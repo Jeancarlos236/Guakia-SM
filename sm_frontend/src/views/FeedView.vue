@@ -63,12 +63,12 @@
 				axios
 					.get("/api/posts/")
 					.then((response) => {
-						console.log("data", response.data);
+						console.error(response.data);
 
 						this.posts = response.data;
 					})
 					.catch((error) => {
-						console.log("error", error);
+						console.error(error);
 					});
 			},
 			deletePost(id) {

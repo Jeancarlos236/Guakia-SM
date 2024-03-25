@@ -156,11 +156,10 @@
 									errorMessage,
 									"bg-red-800",
 								);
-								console.log(response.data.message);
 							}
 						})
 						.catch((error) => {
-							console.log("error", error);
+							console.error("error", error);
 						});
 				}
 			},

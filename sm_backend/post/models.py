@@ -26,7 +26,7 @@ class Post(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     body=models.TextField(blank=True, null=True)
     
-    image=models.CharField(max_length=255, blank=True)
+    image=models.CharField(max_length=255, blank=True, null=True)
     
     is_private=models.BooleanField(default=False)
     

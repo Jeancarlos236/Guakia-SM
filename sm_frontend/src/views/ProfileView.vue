@@ -156,24 +156,19 @@
 
 					// Remove the deleted post from the local posts list
 					this.posts = this.posts.filter((post) => post.id !== id);
-					console.log("post has been deleted");
 					this.getFeed();
 				} catch (error) {
-					console.log("Error deleting post", error);
+					console.error(error);
 				}
 			},
 			sendDirectMessage() {
-				console.log("sendDirectMessage");
-
 				axios
 					.get(`/api/chat/${this.$route.params.id}/get-or-create/`)
 					.then((response) => {
-						console.log(response.data);
-
 						this.$router.push("/chat");
 					})
 					.catch((error) => {
-						console.log("error", error);
+						console.error(error);
 					});
 			},
 
@@ -181,8 +176,6 @@
 				axios
 					.post(`/api/friends/${this.$route.params.id}/request/`)
 					.then((response) => {
-						console.log("data", response.data);
-
 						this.can_send_friendship_request = false;
 
 						if (response.data.message == "request already sent") {
@@ -200,7 +193,7 @@
 						}
 					})
 					.catch((error) => {
-						console.log("error", error);
+						console.error(error);
 					});
 			},
 
@@ -208,21 +201,17 @@
 				axios
 					.get(`/api/posts/profile/${this.$route.params.id}/`)
 					.then((response) => {
-						console.log("data", response.data);
-
 						this.posts = response.data.posts;
 						this.user = response.data.user;
 						this.can_send_friendship_request =
 							response.data.can_send_friendship_request;
 					})
 					.catch((error) => {
-						console.log("error", error);
+						console.error(error);
 					});
 			},
 
 			logout() {
-				console.log("Log out");
-
 				this.userStore.removeToken();
 
 				this.$router.push("/login");

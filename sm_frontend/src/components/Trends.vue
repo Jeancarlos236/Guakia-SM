@@ -46,12 +46,10 @@
 				axios
 					.get("/api/posts/trends/")
 					.then((response) => {
-						console.log(response.data);
-
 						this.trends = response.data;
 					})
 					.catch((error) => {
-						console.log("Error: ", error);
+						console.error(error);
 					});
 			},
 		},

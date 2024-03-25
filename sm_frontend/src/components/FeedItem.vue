@@ -188,15 +188,13 @@
 						}
 					})
 					.catch((error) => {
-						console.log("error", error);
+						console.error(error);
 					});
 			},
 			reportPost() {
 				axios
 					.post(`/api/posts/${this.post.id}/report/`)
 					.then((response) => {
-						console.log(response.data);
-
 						this.toastStore.showToast(
 							5000,
 							"The post was reported",
@@ -204,7 +202,7 @@
 						);
 					})
 					.catch((error) => {
-						console.log("error", error);
+						console.error(error);
 					});
 			},
 
@@ -214,8 +212,6 @@
 				axios
 					.delete(`/api/posts/${this.post.id}/delete/`)
 					.then((response) => {
-						console.log(response.data);
-
 						this.toastStore.showToast(
 							5000,
 							"The post was deleted",
@@ -223,13 +219,11 @@
 						);
 					})
 					.catch((error) => {
-						console.log("error", error);
+						console.error(error);
 					});
 			},
 
 			toggleExtraModal() {
-				console.log("toggleExtraModal");
-
 				this.showExtraModal = !this.showExtraModal;
 			},
 		},

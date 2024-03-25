@@ -104,20 +104,16 @@
 
 		methods: {
 			submitForm() {
-				console.log("submitForm", this.query);
-
 				axios
 					.post("/api/search/", {
 						query: this.query,
 					})
 					.then((response) => {
-						console.log("response:", response.data);
-
 						this.users = response.data.users;
 						this.posts = response.data.posts;
 					})
 					.catch((error) => {
-						console.log("error:", error);
+						console.error(error);
 					});
 			},
 		},

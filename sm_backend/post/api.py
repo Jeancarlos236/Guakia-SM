@@ -91,14 +91,13 @@ def post_list_profile(request, id):
 @authentication_classes([JWTAuthentication]) #force
 def post_create(request):
     form=PostForm(request.POST)
-    image_url=uploadImage(request.FILES['image'])
     if form.is_valid():
         post=form.save(commit=False)
         post.created_by=request.user
         
         
-        if image_url:
-            post.image=image_url
+        if request.FILES and request.FILES['image']:
+            post.image=uploadImage(request.FILES['image'])
 
         post.save()
         user=request.user

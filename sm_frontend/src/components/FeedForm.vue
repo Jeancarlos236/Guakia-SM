@@ -139,7 +139,6 @@
 				this.url = URL.createObjectURL(file);
 			},
 			submitForm() {
-				console.log("submitForm", this.body);
 				let formData = new FormData();
 				formData.append("image", this.$refs.file.files[0]);
 				formData.append("body", this.body);
@@ -153,8 +152,6 @@
 							},
 						})
 						.then((response) => {
-							console.log("data", response.data);
-
 							this.posts.unshift(response.data);
 							this.body = "";
 							this.is_private = false;
@@ -166,7 +163,7 @@
 							}
 						})
 						.catch((error) => {
-							console.log("error", error);
+							console.error(error);
 						});
 				} else {
 					this.toastStore.showToast(

@@ -106,7 +106,7 @@
 								"Bearer " + response.data.access;
 						})
 						.catch((error) => {
-							console.log("error", error);
+							console.error(error);
 							this.errors.push(
 								"The email or passwords do not exists or you have not confirmed you email",
 							);
@@ -121,7 +121,7 @@
 							this.$router.push("/feed");
 						})
 						.catch((error) => {
-							console.log("error", error);
+							console.error(error);
 						});
 				}
 			},
