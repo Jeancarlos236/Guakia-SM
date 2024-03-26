@@ -13,7 +13,7 @@
 					<strong>#{{ trend.hashtag }}</strong
 					><br />
 					<span class="text-gray-500"
-						>{{ trend.occurences }} posts</span
+						>{{ trend.occurrences }} posts</span
 					>
 				</p>
 

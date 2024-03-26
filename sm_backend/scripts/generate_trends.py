@@ -34,4 +34,5 @@ for post in Post.objects.filter(is_private=False).filter(created_at__gte=twenty_
     extract_hashtags(post.body, trends)
 
 for trend in Counter(trends).most_common(10):
-    Trend.objects.create(hashtag=trend[0], occurences=trend[1])
+    Trend.objects.create(hashtag=trend[0], occurrences=trend[1])
+    print(trend)

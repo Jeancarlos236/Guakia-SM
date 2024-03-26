@@ -48,5 +48,8 @@ class Post(models.Model):
         return timesince(self.created_at)
     
 class Trend(models.Model):
-    hashtag=models.CharField(max_length=255)
-    occurences=models.IntegerField()
+    hashtag = models.CharField(max_length=255)
+    occurrences = models.IntegerField() 
+
+    def __str__(self):
+        return self.hashtag
