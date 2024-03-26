@@ -21,7 +21,6 @@ for user in users:
     user.people_you_may_know.clear()
     if user.friends_count>0:
         print('Find Friends for: ',user)
-        # print('this user has no friends')
     for friend in user.friends.all():
         print('Is friends with ', friend)
 

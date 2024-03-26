@@ -72,7 +72,8 @@
 									'accepted',
 									friendshipRequest.created_by.id,
 								)
-							">
+							"
+							v-bind:disabled="submitting">
 							Accept
 						</button>
 						<button
@@ -82,7 +83,8 @@
 									'rejected',
 									friendshipRequest.created_by.id,
 								)
-							">
+							"
+							v-bind:disabled="submitting">
 							Reject
 						</button>
 					</div>
@@ -162,6 +164,7 @@
 				user: {},
 				friendshipRequests: [],
 				friends: [],
+				submitting: false,
 			};
 		},
 
@@ -174,8 +177,6 @@
 				axios
 					.get(`/api/friends/${this.$route.params.id}/`)
 					.then((response) => {
-						console.error(response.data);
-
 						this.friendshipRequests = response.data.requests;
 						this.friends = response.data.friends;
 						this.user = response.data.user;
@@ -186,11 +187,17 @@
 			},
 
 			handleRequest(status, pk) {
+				this.submitting = true;
 				axios
 					.post(`/api/friends/${pk}/${status}/`)
-					.then((response) => {})
 					.catch((error) => {
 						console.error(error);
+					})
+					.then(() => {
+						this.$router.go();
+					})
+					.finally(() => {
+						this.submitting = false;
 					});
 			},
 		},

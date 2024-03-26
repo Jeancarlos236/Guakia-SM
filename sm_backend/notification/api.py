@@ -10,7 +10,7 @@ from .serializers import NotificationSerializer
 @api_view(['GET'])
 @authentication_classes([JWTAuthentication]) 
 def notifications(request):
-    received_notifications = request.user.received_notifications.filter(is_read=False)
+    received_notifications = request.user.received_notifications.filter(is_read=False).order_by('-created_at')
     serializer = NotificationSerializer(received_notifications, many=True)
 
     return JsonResponse(serializer.data, safe=False)

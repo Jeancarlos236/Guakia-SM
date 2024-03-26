@@ -13,10 +13,8 @@ class ChatConsumer(WebsocketConsumer):
         pass
 
     def receive(self, text_data):
-        print("Received text_data:", text_data)
         try:    
             text_data_json = json.loads(text_data)
-            #print("Parsed text_data_json:", text_data_json)
             type = text_data_json.get("type", text_data_json)
             
             if(type == 'chat-message'):

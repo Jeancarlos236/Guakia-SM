@@ -24,7 +24,7 @@ def create_notification(request, type_of_notification, post_id=None, friendreque
     elif type_of_notification == 'accepted_friendrequest':
         friendrequest = FriendshipRequest.objects.get(pk=friendrequest_id)
         created_for = friendrequest.created_for
-        body = f'{request.user.name} accepted your friend request!'
+        body = 'you have a new friend :D'
     elif type_of_notification == 'rejected_friendrequest':
         friendrequest = FriendshipRequest.objects.get(pk=friendrequest_id)
         created_for = friendrequest.created_for

@@ -95,7 +95,7 @@
 
 			submitForm() {
 				if (this.body.trim() !== "") {
-					this.submitting = True;
+					this.submitting = true;
 					axios
 						.post(`/api/posts/${this.$route.params.id}/comment/`, {
 							body: this.body,
