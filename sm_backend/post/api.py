@@ -98,7 +98,9 @@ def post_create(request):
         
         if request.FILES and request.FILES['image']:
             post.image=uploadImage(request.FILES['image'])
-
+        else:
+            post.image=None
+            
         post.save()
         user=request.user
         user.posts_count+=1

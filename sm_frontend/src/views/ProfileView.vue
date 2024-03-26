@@ -149,17 +149,8 @@
 		},
 
 		methods: {
-			async deletePost(id) {
-				try {
-					// Make API request to delete the post
-					await axios.delete(`/api/posts/${id}/delete/`);
-
-					// Remove the deleted post from the local posts list
-					this.posts = this.posts.filter((post) => post.id !== id);
-					this.getFeed();
-				} catch (error) {
-					console.error(error);
-				}
+			deletePost(id) {
+				this.posts = this.posts.filter((post) => post.id !== id);
 			},
 			sendDirectMessage() {
 				axios
