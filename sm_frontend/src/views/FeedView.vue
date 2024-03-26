@@ -20,10 +20,7 @@
 		</div>
 
 		<div class="main-right col-span-1 space-y-4">
-			<div v-if="user.friends_count">
-				<PeopleYouMayKnow />
-			</div>
-
+			<PeopleYouMayKnow />
 			<Trends />
 		</div>
 	</div>
